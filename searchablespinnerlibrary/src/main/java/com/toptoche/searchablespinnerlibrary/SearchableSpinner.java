@@ -9,15 +9,15 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
+import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.fragment.app.FragmentActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchableSpinner extends Spinner implements View.OnTouchListener,
+public class SearchableSpinner extends AppCompatSpinner implements View.OnTouchListener,
         SearchableListDialog.SearchableItem {
 
     public static final int NO_ITEM_SELECTED = -1;
