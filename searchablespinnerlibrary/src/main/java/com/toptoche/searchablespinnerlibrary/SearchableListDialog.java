@@ -1,8 +1,6 @@
 package com.toptoche.searchablespinnerlibrary;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,6 +15,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
 
 import java.io.Serializable;
 import java.util.List;
@@ -76,7 +77,7 @@ public class SearchableListDialog extends DialogFragment implements
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         // Getting the layout inflater to inflate the view in an alert dialog.
-        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        LayoutInflater inflater = LayoutInflater.from(requireActivity());
 
         // Crash on orientation change #7
         // Change Start
@@ -90,7 +91,7 @@ public class SearchableListDialog extends DialogFragment implements
         View rootView = inflater.inflate(R.layout.searchable_list_dialog, null);
         setData(rootView);
 
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(requireActivity());
         alertDialog.setView(rootView);
 
         String strPositiveButton = _strPositiveButtonText == null ? "CLOSE" : _strPositiveButtonText;
@@ -137,17 +138,17 @@ public class SearchableListDialog extends DialogFragment implements
     }
 
     private void setData(View rootView) {
-        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context
+        SearchManager searchManager = (SearchManager) requireActivity().getSystemService(Context
                 .SEARCH_SERVICE);
 
         _searchView = (SearchView) rootView.findViewById(R.id.search);
-        _searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName
+        _searchView.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().getComponentName
                 ()));
         _searchView.setIconifiedByDefault(false);
         _searchView.setOnQueryTextListener(this);
         _searchView.setOnCloseListener(this);
         _searchView.clearFocus();
-        InputMethodManager mgr = (InputMethodManager) getActivity().getSystemService(Context
+        InputMethodManager mgr = (InputMethodManager) requireActivity().getSystemService(Context
                 .INPUT_METHOD_SERVICE);
         mgr.hideSoftInputFromWindow(_searchView.getWindowToken(), 0);
 
@@ -157,7 +158,7 @@ public class SearchableListDialog extends DialogFragment implements
         _listViewItems = (ListView) rootView.findViewById(R.id.listItems);
 
         //create the adapter by passing your ArrayList data
-        listAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1,
+        listAdapter = new ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1,
                 items);
         //attach the adapter to the list
         _listViewItems.setAdapter(listAdapter);

@@ -6,3 +6,17 @@
 .DS_Store
 /build
 /captures
+*.apk
+*.ap_
+*.dex
+*.class
+bin/
+gen/
+out/
+.idea/
+*.log
+*.swp
+.DS_Store
+local.properties
+gradle-app.setting
+.gradletasknamecache

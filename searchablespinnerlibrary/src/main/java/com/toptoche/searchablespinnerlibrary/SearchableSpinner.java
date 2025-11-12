@@ -1,6 +1,5 @@
 package com.toptoche.searchablespinnerlibrary;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
@@ -10,13 +9,15 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+
+import androidx.appcompat.widget.AppCompatSpinner;
+import androidx.fragment.app.FragmentActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchableSpinner extends Spinner implements View.OnTouchListener,
+public class SearchableSpinner extends AppCompatSpinner implements View.OnTouchListener,
         SearchableListDialog.SearchableItem {
 
     public static final int NO_ITEM_SELECTED = -1;
@@ -91,7 +92,10 @@ public class SearchableSpinner extends Spinner implements View.OnTouchListener,
                 }
                 // Change end.
 
-                _searchableListDialog.show(scanForActivity(_context).getFragmentManager(), "TAG");
+                FragmentActivity activity = scanForActivity(_context);
+                if (activity != null) {
+                    _searchableListDialog.show(activity.getSupportFragmentManager(), "TAG");
+                }
             }
         }
         return true;
@@ -143,11 +147,11 @@ public class SearchableSpinner extends Spinner implements View.OnTouchListener,
         _searchableListDialog.setOnSearchTextChangedListener(onSearchTextChanged);
     }
 
-    private Activity scanForActivity(Context cont) {
+    private FragmentActivity scanForActivity(Context cont) {
         if (cont == null)
             return null;
-        else if (cont instanceof Activity)
-            return (Activity) cont;
+        else if (cont instanceof FragmentActivity)
+            return (FragmentActivity) cont;
         else if (cont instanceof ContextWrapper)
             return scanForActivity(((ContextWrapper) cont).getBaseContext());
 
